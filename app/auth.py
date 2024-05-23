@@ -3,10 +3,12 @@ from app.models import Usuarios
 from flask import jsonify, Blueprint, request
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
+# Rotas de autenticação de usuário
 auth = Blueprint('auth', __name__)
 
+# Registra usuário no banco de dados
 @auth.route('/register', methods=['POST'])
-def register():
+def registrar():
     username = request.json.get("username", None)
     email = request.json.get("email", None)
     password = request.json.get("password", None)
@@ -21,6 +23,7 @@ def register():
     db.session.commit()
     return jsonify({"msg": f"Usuário {username} criado com sucesso!"}), 201
 
+# Faz login do usuário no banco de dados
 @auth.route('/login', methods=['POST'])
 def login():
     username = request.json.get("username", None)

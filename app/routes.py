@@ -6,9 +6,6 @@ import pandas as pd
 import requests
 import io
 from unidecode import unidecode
-# @routes.route('/index')
-# def index():
-#     return "Hello, World!"
 
 routes = Blueprint('routes', __name__)
 

@@ -10,7 +10,7 @@ app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 jwt = JWTManager(app)
-# app.register_blueprint(api, url_prefix='/api')
+
 
 
 from app import models
