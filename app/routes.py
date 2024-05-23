@@ -9,21 +9,16 @@ from unidecode import unidecode
 
 routes = Blueprint('routes', __name__)
 
-@routes.route('/index')
+@routes.route("/dados-producao")
 @jwt_required()
-def index():
-    return "Hello, World!"
-
-@jwt_required()
-@routes.route("/dados-producao", methods=['GET'])
 def get_producao():
-    # URL do arquivo CSV
-    url = "http://vitibrasil.cnpuv.embrapa.br/download/Producao.csv"
-    
     try:
+        # URL do arquivo CSV
+        url = "http://vitibrasil.cnpuv.embrapa.br/download/Producao.csv"
+
         # Fazendo uma solicitação GET para o arquivo CSV
         response = requests.get(url)
-        response.raise_for_status()  # Verifica se houve erro na solicitação
+        # response.raise_for_status()  # Verifica se houve erro na solicitação
         
         # Lendo os dados do arquivo CSV
         df = pd.read_csv(io.StringIO(response.content.decode('utf8')), sep=';')
@@ -66,19 +61,17 @@ def get_producao():
         dados_json = dados_reestruturados.to_json(orient='records', force_ascii=False)
 
         # Retornando os dados como resposta
-        return jsonify(dados_json)
-    
+        return dados_json
     except requests.exceptions.RequestException as e:
-        # Retornando uma mensagem de erro se a solicitação falhar
-        return jsonify({"error": str(e)}), 500
+        # Lidar com erros de solicitação
+        return jsonify({"error": "Erro ao fazer a solicitação: " + str(e)}), 500
+
     except pd.errors.ParserError as e:
-        # Retornando uma mensagem de erro se houver um erro ao analisar o arquivo CSV
-        return jsonify({"error": "Erro ao analisar o arquivo CSV"}), 500
+        # Lidar com erros ao analisar o arquivo CSV
+        return jsonify({"error": "Erro ao analisar o arquivo CSV: " + str(e)}), 500
 
-
-
-@jwt_required()
 @routes.route("/dados-processamento/<arg>", methods=['GET'])
+@jwt_required()
 def get_processa_viniferas(arg):
     # URL do arquivo CSV
     if arg == 'viniferas':
@@ -142,7 +135,7 @@ def get_processa_viniferas(arg):
         dados_json = dados_reestruturados.to_json(orient='records', force_ascii=False)
 
         # Retornando os dados como resposta
-        return jsonify(dados_json)
+        return dados_json
 
     except requests.exceptions.RequestException as e:
         # Lidar com erros de solicitação
@@ -153,8 +146,8 @@ def get_processa_viniferas(arg):
         return jsonify({"error": "Erro ao analisar o arquivo CSV: " + str(e)}), 500
 
 
-@jwt_required()
 @routes.route("/dados-importacao/<arg>", methods=['GET'])
+@jwt_required()
 def get_importacao(arg):
     # URL do arquivo CSV
     if arg == 'vinhos-de-mesa':
@@ -214,7 +207,7 @@ def get_importacao(arg):
         dados_json = dados_reestruturados.to_json(orient='records', force_ascii=False)
 
         # Retornando os dados como resposta
-        return jsonify(dados_json)
+        return dados_json
 
     except requests.exceptions.RequestException as e:
         # Lidar com erros de solicitação
@@ -225,8 +218,8 @@ def get_importacao(arg):
         return jsonify({"error": "Erro ao analisar o arquivo CSV: " + str(e)}), 500
 
 
-@jwt_required()
 @routes.route("/dados-exportacao/<arg>", methods=['GET'])
+@jwt_required()
 def get_exportacao(arg):
     # URL do arquivo CSV
     if arg == 'vinhos-de-mesa':
@@ -284,7 +277,7 @@ def get_exportacao(arg):
         dados_json = dados_reestruturados.to_json(orient='records', force_ascii=False)
 
         # Retornando os dados como resposta
-        return jsonify(dados_json)
+        return dados_json
 
     except requests.exceptions.RequestException as e:
         # Lidar com erros de solicitação
@@ -294,8 +287,8 @@ def get_exportacao(arg):
         # Lidar com erros ao analisar o arquivo CSV
         return jsonify({"error": "Erro ao analisar o arquivo CSV: " + str(e)}), 500
 
-@jwt_required()
 @routes.route("/dados-comercializacao")
+@jwt_required()
 def get_comercializacao():
     # URL do arquivo CSV
     url = "http://vitibrasil.cnpuv.embrapa.br/download/Comercio.csv"
@@ -340,7 +333,7 @@ def get_comercializacao():
         dados_json = dados_reestruturados.to_json(orient='records', force_ascii=False)
         
         # Retornando os dados como resposta
-        return jsonify(dados_json)
+        return dados_json
     
     except requests.exceptions.RequestException as e:
         # Retornando uma mensagem de erro se a solicitação falhar
