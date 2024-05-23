@@ -11,8 +11,8 @@ Rode o seguinte comando para visualizar o histórico:
 
 ### Comandos Disponíveis
 
-- Para gerar uma nova migração, é necessário adicionar uma classe em app/models.py com o nome da tabela que deseja criar no banco. Depois disso, digitar o seguinte comando:
-  `flask db migrate` para identificar alterações
+- Para gerar uma nova migração, é necessário adicionar uma classe em app/models.py com o nome da tabela que deseja criar no banco. Depois disso, digitar o seguinte comando:  
+  `flask db migrate` para identificar alterações  
   `flask db upgrade` para executar as alterações no banco de dados
 
 
