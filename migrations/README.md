@@ -1,19 +1,31 @@
 ## Gerenciamento de Migrações
 
 Para gerenciar as migrações do banco de dados, defina a variável de ambiente:
-`$env:FLASK_APP=main.py`
+```bash
+$env:FLASK_APP=main.py
+```
 
 Ative seu ambiente virtual na pasta raíz do projeto:
-`.\venv\Scripts\activate`
+```bash
+.\venv\Scripts\activate
+```
 
 Rode o seguinte comando para visualizar o histórico:
-`flask db history`
+```bash
+flask db history
+```
 
 ### Comandos Disponíveis
 
-- Para gerar uma nova migração, é necessário adicionar uma classe em app/models.py com o nome da tabela que deseja criar no banco. Depois disso, digitar o seguinte comando:  
-  `flask db migrate` para identificar alterações  
-  `flask db upgrade` para executar as alterações no banco de dados
+- Para gerar uma nova migração, é necessário adicionar uma classe em app/models.py com o nome da tabela que deseja criar no banco. Depois disso, digitar o seguinte comando para identificar alterações:  
+  ```bash
+  flask db migrate
+  ```
+  E para executar as alterações:
+  ```bash
+  flask db upgrade
+  ```
+  
 
 
 ### Histórico
