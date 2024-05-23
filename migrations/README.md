@@ -4,12 +4,14 @@ Para gerenciar as migrações do banco de dados, defina a variável de ambiente:
 ```bash
 $env:FLASK_APP=main.py
 ```
-
+Crie um ambiente virtual na pasta raíz do projeto:
+```bash
+python -m venv venv
+```
 Ative seu ambiente virtual na pasta raíz do projeto:
 ```bash
 .\venv\Scripts\activate
 ```
-
 Rode o seguinte comando para visualizar o histórico:
 ```bash
 flask db history
