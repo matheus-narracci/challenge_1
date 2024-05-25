@@ -4,7 +4,8 @@
 <img loading="lazy" src="http://img.shields.io/static/v1?label=STATUS&message=EM%20DESENVOLVIMENTO&color=GREEN&style=for-the-badge"/>
 </p>
 
-<p>Esta API permite consultar dados das diferentes abas do site <a href="http://vitibrasil.cnpuv.embrapa.br/index.php">Embrapa Vitibrasil</a>. A API oferece endpoints para acessar informações disponíveis em cada aba e sub-aba do site. A API também possui método de autenticação <b>JWT</b>(JSON Web Token) para realizar as requisições.</p>
+<p>Esta API Flask permite consultar dados das diferentes abas do site <a href="http://vitibrasil.cnpuv.embrapa.br/index.php">Embrapa Vitibrasil</a>. A API oferece endpoints para acessar informações disponíveis em cada aba e sub-aba do site. A API também possui método de autenticação <b>JWT</b>(JSON Web Token) para realizar as requisições.</p>
+
 
 <h2> Endpoints disponíveis </h2>
 
@@ -540,4 +541,111 @@ def realiza_requisicao(token):
     return response.json()
 ```
 
+<h2>Pré-requisitos</h2>
+
+Antes de começar, você vai precisar ter instalado em sua máquina as seguintes ferramentas:
+[Git](https://git-scm.com), [Python](https://www.python.org/downloads/), [MySQL](https://dev.mysql.com/downloads/installer/).
+Além disto é bom ter um editor para trabalhar com o código como [VSCode](https://code.visualstudio.com/) e um um framework para desenvolvimento/teste de API como o [Insomnia](https://insomnia.rest/download).
+No projeto, foi utilizado a versão do Python 3.11.9 no Windows 11.
+
+### Variáveis .env
+É necessário que você crie um arquivo <b>.env</b> contendo algumas variáveis que serão utilizadas na execução da API. Algumas informações como o host e API_URL podem variar, mas nesse caso, estamos rodando localmente. Esse é um exemplo do arquivo:
+<pre>
+<code>SECRET_KEY = sua_chave_secreta
+SQLALCHEMY_DATABASE_URI = mysql://seu_usuario_sql:sua_senha_sql@localhost/seu_database
+JWT_SECRET_KEY = jwt_chave_secreta
+SQLALCHEMY_TRACK_MODIFICATIONS = False
+API_URL = http://localhost:5000</code>
+</pre>
+
+
+
+
+<h2>Como rodar a aplicação</h2>
+
+### Clonando o repositório
+Clone este repositório:
+```
+git clone https://github.com/matheus-narracci/challenge_1
+```
+
+### Criando o database:
+Durante a instalação do MySQL, será configurada uma senha para o usuário <b>root</b> ou um usuário escolhido (opcional). No terminal de comando, acesse o MySQL:
+```bash
+mysql -u root -p
+```
+O `-p` pedirá a senha, caso esteja configurada. Esta deve ser inserida assim que o comando for executado.
+
+Assim que fizer o login no MySQL, você pode criar o seu database com o comando SQL e selecioná-lo para utilização com os comandos a seguir:
+```bash
+CREATE DATABASE seu_database;
+USE seu_database;
+```
+
+### Definindo variáveis de ambiente e ativando virtualenv
+
+No terminal de comando, acesse o diretório que clonou o repositório:
+```bash
+cd seu_repositorio
+```
+
+Crie uma variável de ambiente da aplicação Flask apontando para o arquivo "main.py":
+```bash
+$env:FLASK_APP="main.py"
+```
+Crie um ambiente virtual e ative:
+```bash
+python -m venv venv
+.\venv\Scripts\activate
+```
+
+### Instalando bibliotecas com pip
+Instale as bibliotecas usadas na aplicação:
+```bash
+pip install -r requirements.txt
+```
+
+### Criando a base de dados de usuários para acesso à aplicação
+Se quiser começar do 0, remova a pasta "migration" do seu projeto e execute esse comando no terminal:
+```bash
+flask db init
+```
+Se quiser permanecer com a pasta, é necessário resetar o arquivo alembic.ini com esse comando antes dos dois últimos :
+```bash
+flask db stamp head
+```
+Após seguir uma das opções, execute:
+```bash
+flask db migrate
+```
+```bash
+flask db upgrade
+```
+Isso fará com que as classes de `models.py` sejam criadas como tabelas no MySQL.
+
+### Rodando a aplicação
+Se todos os comandos acima foram executados com sucesso, sua aplicação está pronta para uso! Execute-a dessa forma:
+```bash
+flask run
+```
+Deve ser exibido algo como:
+<pre><code> * Serving Flask app 'main.py'
+ * Debug mode: off
+WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
+ * Running on http://127.0.0.1:5000
+Press CTRL+C to quit</code></pre>
+
+<h2>Autores</h2>
+
+<table>
+  <tbody>
+    <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/viktorferrer"><img src="https://media.licdn.com/dms/image/C4D03AQGrE1fuGDuNqQ/profile-displayphoto-shrink_400_400/0/1648237983102?e=1721865600&v=beta&t=YHS6fsBVaa8NgneIrUU2MnQG-nWCco7_G4wqGe6F660" width="100px;" alt="Viktor Ferrer"/><br /><sub><b>Viktor Ferrer</b></sub></a><br /><a href="https://www.linkedin.com/in/viktor-bartosz-ferrer-7aa1b9196/" title="LinkedIn"><img src="https://github.com/dheereshagrwal/colored-icons/blob/master/public/icons/linkedin/linkedin.svg" width="16"></a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/matheus-narracci"><img src="https://media.licdn.com/dms/image/D4D03AQE0hTYpMS9eEQ/profile-displayphoto-shrink_400_400/0/1676843834758?e=1721865600&v=beta&t=K6XhNaPjrek7npNyCq8TpGP-4wnVkd78i-m5RXH-LAU" width="100px;" alt="Matheus Narracci"/><br /><sub><b>Matheus Narracci</b></sub></a><br /><a href="https://www.linkedin.com/in/matheus-narracci-a5989b160/" title="LinkedIn"><img src="https://github.com/dheereshagrwal/colored-icons/blob/master/public/icons/linkedin/linkedin.svg" width="16"></a></td>
+	<td align="center" valign="top" width="14.28%"><a href="https://www.linkedin.com/in/lucas-assis-dias/"><img src="https://media.licdn.com/dms/image/D4D03AQGs1pIBQdGLRQ/profile-displayphoto-shrink_400_400/0/1682109280254?e=1721865600&v=beta&t=sil4cY7GlX85liiZGsVxJtLjReDyS8LtVm35DA1b044" width="100px;" alt="Lucas Assis"/><br /><sub><b>Lucas Assis</b></sub></a><br /><a href="https://www.linkedin.com/in/lucas-assis-dias/" title="LinkedIn"><img src="https://github.com/dheereshagrwal/colored-icons/blob/master/public/icons/linkedin/linkedin.svg" width="16"></a></td>
+    </tr>
+  </tbody>
+</table>
+
+	
 
