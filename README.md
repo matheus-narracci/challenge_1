@@ -6,6 +6,52 @@
 
 <p>Esta API Flask permite consultar dados das diferentes abas do site <a href="http://vitibrasil.cnpuv.embrapa.br/index.php">Embrapa Vitibrasil</a>. A API oferece endpoints para acessar informações disponíveis em cada aba e sub-aba do site. A API também possui método de autenticação <b>JWT</b>(JSON Web Token) para realizar as requisições.</p>
 
+## Tabela de Conteúdos
+
+- [1. Registro de Usuário](#1-registro-de-usuário)
+  - [Exemplo de requisição](#exemplo-de-requisição)
+  - [Parâmetros](#parâmetros)
+  - [Possíveis respostas da requisição](#possíveis-respostas-da-requisição)
+  - [Como realizar uma requisição](#como-realizar-uma-requisição)
+- [2. Login do Usuário](#2-login-do-usuário)
+  - [Exemplo de requisição](#exemplo-de-requisição-1)
+  - [Parâmetros](#parâmetros-1)
+  - [Possíveis respostas da requisição](#possíveis-respostas-da-requisição-1)
+  - [Como realizar uma requisição](#como-realizar-uma-requisição-1)
+- [3. Dados de Produção](#3-dados-de-produção)
+  - [Exemplo de requisição](#exemplo-de-requisição-2)
+  - [Possíveis respostas da requisição](#possíveis-respostas-da-requisição-2)
+  - [Como realizar uma requisição](#como-realizar-uma-requisição-2)
+- [4. Dados de Processamento](#4-dados-de-processamento)
+  - [Exemplo de requisição](#exemplo-de-requisição-3)
+  - [Parâmetros](#parâmetros-2)
+  - [Possíveis respostas da requisição](#possíveis-respostas-da-requisição-3)
+  - [Como realizar uma requisição](#como-fazer-uma-requisição)
+- [5. Dados de Comercialização](#5-dados-de-comercialização)
+  - [Exemplo de requisição](#exemplo-de-requisição-4)
+  - [Possíveis respostas da requisição](#possíveis-respostas-da-requisição-4)
+  - [Como realizar uma requisição](#como-fazer-uma-requisição-1)
+- [6. Dados de Importação](#6-dados-de-importação)
+  - [Exemplo de requisição](#exemplo-de-requisição-5)
+  - [Parâmetros](#parâmetros-3)
+  - [Possíveis respostas da requisição](#possíveis-respostas-da-requisição-5)
+  - [Como fazer uma requisição](#como-fazer-uma-requisição-2)
+- [7. Dados de Exportação](#7-dados-de-exportação)
+  - [Exemplo de requisição](#exemplo-de-requisição-6)
+  - [Parâmetros](#parâmetros-4)
+  - [Possíveis respostas da requisição](#possíveis-respostas-da-requisição-6)
+  - [Como fazer uma requisição](#como-fazer-uma-requisição-3)
+- [Pré-requisitos](#pré-requisitos)
+- [Variáveis .env](#variáveis-env)
+- [Como rodar a aplicação](#como-rodar-a-aplicação)
+  - [Clonando o repositório](#clonando-o-repositório)
+  - [Criando o database](#criando-o-database)
+  - [Definindo variáveis de ambiente e ativando virtualenv](#definindo-variáveis-de-ambiente-e-ativando-virtualenv)
+  - [Instalando bibliotecas com pip](#instalando-bibliotecas-com-pip)
+  - [Criando a base de dados de usuários para acesso à aplicação](#criando-a-base-de-dados-de-usuários-para-acesso-à-aplicação)
+  - [Rodando a aplicação](#rodando-a-aplicação)
+- [Autores](#autores)
+
 
 <h2> Endpoints disponíveis </h2>
 
