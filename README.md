@@ -601,7 +601,7 @@ SECRET_KEY = sua_chave_secreta
 SQLALCHEMY_DATABASE_URI = mysql://seu_usuario_sql:sua_senha_sql@localhost/seu_database
 JWT_SECRET_KEY = jwt_chave_secreta
 SQLALCHEMY_TRACK_MODIFICATIONS = False
-API_URL = http://localhost:5000</code>
+API_URL = http://localhost:5000
 ```
 
 
