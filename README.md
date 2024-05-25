@@ -42,7 +42,7 @@
   - [Possíveis respostas da requisição](#possíveis-respostas-da-requisição-6)
   - [Como fazer uma requisição](#como-fazer-uma-requisição-3)
 - [Pré-requisitos](#pré-requisitos)
-- [Variáveis .env](#variáveis-env)
+  - [Variáveis .env](#variáveis-env)
 - [Como rodar a aplicação](#como-rodar-a-aplicação)
   - [Clonando o repositório](#clonando-o-repositório)
   - [Criando o database](#criando-o-database)
@@ -596,13 +596,13 @@ No projeto, foi utilizado a versão do Python 3.11.9 no Windows 11.
 
 ### Variáveis .env
 É necessário que você crie um arquivo <b>.env</b> contendo algumas variáveis que serão utilizadas na execução da API. Algumas informações como o host e API_URL podem variar, mas nesse caso, estamos rodando localmente. Esse é um exemplo do arquivo:
-<pre>
-<code>SECRET_KEY = sua_chave_secreta
+```bash
+SECRET_KEY = sua_chave_secreta
 SQLALCHEMY_DATABASE_URI = mysql://seu_usuario_sql:sua_senha_sql@localhost/seu_database
 JWT_SECRET_KEY = jwt_chave_secreta
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 API_URL = http://localhost:5000</code>
-</pre>
+```
 
 
 
