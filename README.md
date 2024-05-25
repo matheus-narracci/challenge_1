@@ -6,11 +6,9 @@
 
 <p>Esta API permite consultar dados das diferentes abas do site <a href="http://vitibrasil.cnpuv.embrapa.br/index.php">Embrapa Vitibrasil</a>. A API oferece endpoints para acessar informações disponíveis em cada aba e sub-aba do site. A API também possui método de autenticação <b>JWT</b>(JSON Web Token) para realizar as requisições.</p>
 
-<h2> Funcionalidades </h2>
+<h2> Endpoints disponíveis </h2>
 
-<h3> Endpoints disponíveis </h3>
-
-#### 1. Registro de Usuário
+### 1. Registro de Usuário
 
 <p>Registra usuários no banco de dados. O usuário será usado na autenticação JWT para realizar as requisições GET na API. </p>
 <ul>
@@ -30,30 +28,25 @@
     <li><code>password</code>: (string) A senha que será vinculada ao usuário criado.</li>
 </ul>
 
-##### Exemplo de respostas:
-<pre><code>{
-	"msg": "User not found."
-}
-</code></pre>
 
+##### Possíveis respostas da requisição:
+<ul>
+  <strong>201:</strong> Requisição de criação de recurso concluída com sucesso.
+</ul>
 <pre><code>{
 	"msg": "User {{username} } created successfully!"
 }
 </code></pre>
 
-##### Possíveis respostas da requisição:
 <ul>
-  <li><strong>201:</strong> Requisição de criação de recurso concluída com sucesso.</li>
+  <strong>400:</strong> Requisição malformada.
 </ul>
-<ul>
-  <li><strong>401:</strong> Credenciais inválidas.</li>
-</ul>
-<ul>
-  <li><strong>400:</strong> Requisição malformada.</li>
-</ul>
+<pre><code>{
+	"msg": "Username already exists"
+}
+</code></pre>
 
-
-##### Exemplos de uso
+##### Como realizar uma requisição:
 * Prompt de Comando:
 ```bash
 Invoke-RestMethod -Uri "http://localhost:5000/auth/register" -Method Post -Headers @{ "Content-Type" = "application/json" } -Body '{ "username": "seu_usuario", "password": "sua_senha" }'
@@ -73,7 +66,7 @@ def registra_usuario(username, password):
 ```
 
 
-#### 2. Login do Usuário
+### 2. Login do Usuário
 
 Realiza o login a partir do usuário e senha criados na rota `/auth/register`. O login retornará um token de acesso para as demais requisições.
 <ul>
@@ -93,30 +86,27 @@ Realiza o login a partir do usuário e senha criados na rota `/auth/register`. O
     <li><code>password</code>: (string) A senha vinculada ao usuário criado.</li>
 </ul>
 
-##### Exemplo de respostas:
+
+##### Possíveis respostas da requisição:
+<ul>
+  <strong>200:</strong> Requisição concluída com sucesso.
+</ul>
+<pre><code>{
+	"access_token": {{access_token}}
+}
+</code></pre>
+
+<ul>
+  <li><strong>401:</strong> Credenciais inválidas.</li>
+</ul>
 <pre><code>{
 	"msg": "Incorrect username or password."
 }
 </code></pre>
 
-<pre><code>{
-	"access_token": {{access_token}}"
-}
-</code></pre>
-
-##### Possíveis respostas da requisição:
-<ul>
-  <li><strong>200:</strong> Requisição concluída com sucesso.</li>
-</ul>
-<ul>
-  <li><strong>401:</strong> Credenciais inválidas.</li>
-</ul>
-<ul>
-  <li><strong>400:</strong> Requisição malformada.</li>
-</ul>
 
 
-##### Exemplos de uso
+##### Como realizar uma requisição:
 * Prompt de Comando:
 ```bash
 (Invoke-RestMethod -Uri "http://localhost:5000/auth/login" -Method Post -Headers @{ "Content-Type" = "application/json" } -Body '{ "username": "seu_usuario", "password": "sua+senha" }').access_token
@@ -137,7 +127,7 @@ def login_e_retorna_token(username, password):
 ```
 
 
-#### 3. Dados de Produção
+### 3. Dados de Produção
 
 <p>Consulta dados relacionados à produção de vinhos, sucos e derivados do Rio Grande do Sul.</p>
 <ul>
@@ -149,15 +139,11 @@ def login_e_retorna_token(username, password):
 ##### Exemplo de requisição:
 <pre><code>GET /api/dados-producao</code></pre>
 
-##### Exemplo de respostas:
-<pre><code>{
-	"msg": "Missing Authorization Header"
-}
-</code></pre>
 
-<pre><code>{
-	"msg": "Token has expired"
-}</code></pre>
+##### Possíveis respostas da requisição:
+<ul>
+  <li><strong>200:</strong> Requisição concluída com sucesso.</li>
+</ul>
 
 <pre><code>{
   "data": [
@@ -178,19 +164,27 @@ def login_e_retorna_token(username, password):
 }
 </code></pre>
 
-##### Possíveis respostas da requisição:
 <ul>
-  <li><strong>200:</strong> Requisição concluída com sucesso.</li>
+  <li><strong>401:</strong> Credenciais inválidas.</li>
 </ul>
+<pre><code>{
+	"msg": "Missing Authorization Header"
+}
+</code></pre>
+<pre><code>{
+	"msg": "Missing 'Bearer' type in 'Authorization' header. Expected 'Authorization: Bearer <JWT>'"
+}</code></pre>
+		
+<pre><code>{
+	"msg": "Token has expired"
+}</code></pre>
+
 <ul>
-  <li><strong>401:</strong> Token expirado.</li>
-</ul>
-<ul>
-  <li><strong>400:</strong> Requisição malformada.</li>
+  <strong>400:</strong> Requisição malformada.
 </ul>
 
 
-##### Exemplos de uso
+##### Como realizar uma requisição:
 * Prompt de Comando:
 ```bash
 Invoke-RestMethod -Uri "http://localhost:5000/auth/login" -Method Post -Headers @{ "Content-Type" = "application/json" } -Body '{ "username": "seu_usuario", "password": "sua_senha" }' | Select-Object -ExpandProperty access_token | ForEach-Object { Invoke-RestMethod -Uri "http://localhost:5000/api/dados-producao" -Headers @{ "Authorization" = "Bearer $_" } }
@@ -201,6 +195,342 @@ Invoke-RestMethod -Uri "http://localhost:5000/auth/login" -Method Post -Headers 
 import requests
 def realiza_requisicao(token):
     url = "http://localhost:5000/api/dados-producao"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.get(url, headers=headers)
+    return response.json()
+```
+
+### 4. Dados de Processamento
+
+<p>Consulta dados relacionados ao processamento de viníferas, americanas e híbridas, uvas de mesa e sem classificação..</p>
+<ul>
+    <li><strong>Endpoint:</strong> <code>/api/dados-processamento/&lt;arg&gt;</code></li>
+    <li><strong>Método:</strong> GET</li>
+    <li><strong>Descrição:</strong> Retorna dados de processamento baseados no argumento fornecido (<code>viniferas</code>, <code>uvas-de-mesa</code>, <code>americanas-e-hibridas</code> ou <code>sem-classificacao</code>).</li>
+</ul>
+
+##### Exemplo de requisição:
+<pre><code>GET /api/dados-processamento/viniferas</code></pre>
+<pre><code>GET /api/dados-processamento/uvas-de-mesa</code></pre>
+<pre><code>GET /api/dados-processamento/americanas-e-hibridas</code></pre>
+<pre><code>GET /api/dados-processamento/sem-classificacao</code></pre>
+
+
+##### Parâmetros:
+<ul>
+    <li><code>arg</code>: (string) O tipo de dado de processamento que deseja consultar. Pode ser <code>viniferas</code>, <code>uvas-de-mesa</code>, <code>americanas-e-hibridas</code> ou <code>sem-classificacao</code>.</li>
+</ul>
+
+##### Possíveis respostas da requisição:
+<ul>
+  <li><strong>200:</strong> Requisição concluída com sucesso.</li>
+</ul>
+
+<pre><code>{
+  "data": [
+    {
+      	"ano": "1970",
+	"cultivar": "alicante bouschet",
+	"quantidade_kg": 0,
+	"tipo_cultivar": "tintas"
+    },
+    {
+	"ano": "1970",
+	"cultivar": "ancelota",
+	"quantidade_kg": 0,
+	"tipo_cultivar": "tintas"
+    }
+  ...
+  ]
+}
+</code></pre>
+
+<ul>
+  <li><strong>401:</strong> Credenciais inválidas.</li>
+</ul>
+<pre><code>{
+	"msg": "Missing Authorization Header"
+}
+</code></pre>
+<pre><code>{
+	"msg": "Missing 'Bearer' type in 'Authorization' header. Expected 'Authorization: Bearer <JWT>'"
+}</code></pre>
+		
+<pre><code>{
+	"msg": "Token has expired"
+}</code></pre>
+
+<ul>
+  <strong>400:</strong> Requisição malformada.
+</ul>
+
+
+
+##### Como fazer uma requisição:
+* Prompt de Comando:
+```bash
+Invoke-RestMethod -Uri "http://localhost:5000/auth/login" -Method Post -Headers @{ "Content-Type" = "application/json" } -Body '{ "username": "seu_usuario", "password": "sua_senha" }' | Select-Object -ExpandProperty access_token | ForEach-Object { Invoke-RestMethod -Uri "http://localhost:5000/api/dados-processamento/viniferas" -Headers @{ "Authorization" = "Bearer $_" } }
+```
+
+* Python:
+ ```python
+import requests
+def realiza_requisicao(token):
+    url = "http://localhost:5000/api/dados-processamento/viniferas"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.get(url, headers=headers)
+    return response.json()
+```
+
+
+#### 5. Dados de Comercialização
+
+<p>Consulta dados relacionados à comercialização de vinhos, sucos e derivados do Rio Grande do Sul.</p>
+<ul>
+    <li><strong>Endpoint:</strong> <code>/api/dados-comercializacao</code></li>
+    <li><strong>Método:</strong> GET</li>
+    <li><strong>Descrição:</strong> Retorna dados de comercialização dos produtos disponíveis na aba.</li>
+</ul>
+
+##### Exemplo de requisição:
+<pre><code>GET /api/dados-comercializacao</code></pre>
+
+
+##### Possíveis respostas da requisição:
+<ul>
+  <li><strong>200:</strong> Requisição concluída com sucesso.</li>
+</ul>
+<pre><code>{
+  "data": [
+    {
+	"ano": "1970",
+	"produto": "  tinto",
+	"quantidade_litros": 83300735,
+	"tipo_produto": "vinho de mesa"
+    },
+    {
+	"ano": "1970",
+	"produto": "  rosado",
+	"quantidade_litros": 107681,
+	"tipo_produto": "vinho de mesa"
+    }
+  ...
+  ]
+}
+</code></pre>
+
+<ul>
+  <li><strong>401:</strong> Credenciais inválidas.</li>
+</ul>
+<pre><code>{
+	"msg": "Missing Authorization Header"
+}
+</code></pre>
+<pre><code>{
+	"msg": "Missing 'Bearer' type in 'Authorization' header. Expected 'Authorization: Bearer <JWT>'"
+}</code></pre>
+		
+<pre><code>{
+	"msg": "Token has expired"
+}</code></pre>
+
+<ul>
+  <strong>400:</strong> Requisição malformada.
+</ul>
+
+##### Como fazer uma requisição:
+* Prompt de Comando:
+```bash
+Invoke-RestMethod -Uri "http://localhost:5000/auth/login" -Method Post -Headers @{ "Content-Type" = "application/json" } -Body '{ "username": "seu_usuario", "password": "sua_senha" }' | Select-Object -ExpandProperty access_token | ForEach-Object { Invoke-RestMethod -Uri "http://localhost:5000/api/dados-comercializacao" -Headers @{ "Authorization" = "Bearer $_" } }
+```
+
+* Python:
+ ```python
+import requests
+def realiza_requisicao(token):
+    url = "http://localhost:5000/api/dados-comercializacao"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.get(url, headers=headers)
+    return response.json()
+```
+
+### 6. Dados de Importação
+
+<p>Consulta dados relacionados à importação de vinhos de mesa, espumantes, uvas frescas, uvas passas e sucos de uva.</p>
+<ul>
+    <li><strong>Endpoint:</strong> <code>/api/dados-importacao/&lt;arg&gt;</code></li>
+    <li><strong>Método:</strong> GET</li>
+    <li><strong>Descrição:</strong> Retorna dados de importação baseados no argumento fornecido (<code>vinhos-de-mesa</code>, <code>espumantes</code>, <code>uvas-frescas</code>, <code>uvas-passas</code> ou <code>sucos-de-uva</code>).</li>
+</ul>
+
+##### Exemplo de requisição:
+<pre><code>GET /api/dados-importacao/vinhos-de-mesa</code></pre>
+<pre><code>GET /api/dados-importacao/espumantes</code></pre>
+<pre><code>GET /api/dados-importacao/uvas-frescas</code></pre>
+<pre><code>GET /api/dados-importacao/uvas-passas</code></pre>
+<pre><code>GET /api/dados-importacao/sucos-de-uva</code></pre>
+
+
+##### Parâmetros:
+<ul>
+    <li><code>arg</code>: (string) O tipo de dado de processamento que deseja consultar. Pode ser <code>vinhos-de-mesa</code>, <code>espumantes</code>, <code>uvas-frescas</code>, <code>uvas-passas</code> ou <code>sucos-de-uva</code>.</li>
+</ul>
+
+
+
+##### Possíveis respostas da requisição:
+<ul>
+  <li><strong>200:</strong> Requisição concluída com sucesso.</li>
+</ul>
+<pre><code>{
+  "data": [
+    {
+	"ano": 1970,
+	"pais": "africa do sul",
+	"quantidade_kg": 0,
+	"valor_us": 0.0
+    },
+    {
+	"ano": 1970,
+	"pais": "alemanha",
+	"quantidade_kg": 52297,
+	"valor_us": 30498.0
+    }
+  ...
+  ]
+}
+</code></pre>
+
+<ul>
+  <li><strong>401:</strong> Credenciais inválidas.</li>
+</ul>
+<pre><code>{
+	"msg": "Missing Authorization Header"
+}
+</code></pre>
+<pre><code>{
+	"msg": "Missing 'Bearer' type in 'Authorization' header. Expected 'Authorization: Bearer <JWT>'"
+}</code></pre>
+		
+<pre><code>{
+	"msg": "Token has expired"
+}</code></pre>
+
+<ul>
+  <strong>400:</strong> Requisição malformada.
+</ul>
+
+##### Como fazer uma requisição:
+* Prompt de Comando:
+```bash
+Invoke-RestMethod -Uri "http://localhost:5000/auth/login" -Method Post -Headers @{ "Content-Type" = "application/json" } -Body '{ "username": "seu_usuario", "password": "sua_senha" }' | Select-Object -ExpandProperty access_token | ForEach-Object { Invoke-RestMethod -Uri "http://localhost:5000/api/dados-importacao/vinhos-de-mesa" -Headers @{ "Authorization" = "Bearer $_" } }
+```
+
+* Python:
+ ```python
+import requests
+def realiza_requisicao(token):
+    url = "http://localhost:5000/api/dados-importacao/vinhos-de-mesa"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.get(url, headers=headers)
+    return response.json()
+```
+
+
+### 7. Dados de Exportação
+
+<p>Consulta dados relacionados à exportação de vinhos de mesa, espumantes, uvas frescas e sucos de uva.</p>
+<ul>
+    <li><strong>Endpoint:</strong> <code>/api/dados-exportacao/&lt;arg&gt;</code></li>
+    <li><strong>Método:</strong> GET</li>
+    <li><strong>Descrição:</strong> Retorna dados de exportação baseados no argumento fornecido (<code>vinhos-de-mesa</code>, <code>espumantes</code>, <code>uvas-frescas</code> ou <code>sucos-de-uva</code>).</li>
+</ul>
+
+##### Exemplo de requisição:
+<pre><code>GET /api/dados-exportacao/vinhos-de-mesa</code></pre>
+<pre><code>GET /api/dados-exportacao/espumantes</code></pre>
+<pre><code>GET /api/dados-exportacao/uvas-frescas</code></pre>
+<pre><code>GET /api/dados-exportacao/uvas-passas</code></pre>
+<pre><code>GET /api/dados-exportacao/sucos-de-uva</code></pre>
+
+
+##### Parâmetros:
+<ul>
+    <li><code>arg</code>: (string) O tipo de dado de processamento que deseja consultar. Pode ser <code>vinhos-de-mesa</code>, <code>espumantes</code>, <code>uvas-frescas</code> ou <code>sucos-de-uva</code>.</li>
+</ul>
+
+
+##### Possíveis respostas da requisição:
+<ul>
+  <li><strong>200:</strong> Requisição concluída com sucesso.</li>
+</ul>
+<pre><code>{
+  "data": [
+    {
+	"ano": 1970,
+	"pais": "afeganistao",
+	"quantidade_kg": 0,
+	"valor_us": 0
+    },
+    {
+	"ano": 1970,
+	"pais": "africa do sul",
+	"quantidade_kg": 0,
+	"valor_us": 0
+    }
+  ...
+  ]
+}
+</code></pre>
+
+<ul>
+  <li><strong>401:</strong> Credenciais inválidas.</li>
+</ul>
+<pre><code>{
+	"msg": "Missing Authorization Header"
+}
+</code></pre>
+<pre><code>{
+	"msg": "Missing 'Bearer' type in 'Authorization' header. Expected 'Authorization: Bearer <JWT>'"
+}</code></pre>
+		
+<pre><code>{
+	"msg": "Token has expired"
+}</code></pre>
+
+<ul>
+  <strong>400:</strong> Requisição malformada.
+</ul>
+
+
+
+##### Como fazer uma requisição:
+* Prompt de Comando:
+```bash
+Invoke-RestMethod -Uri "http://localhost:5000/auth/login" -Method Post -Headers @{ "Content-Type" = "application/json" } -Body '{ "username": "seu_usuario", "password": "sua_senha" }' | Select-Object -ExpandProperty access_token | ForEach-Object { Invoke-RestMethod -Uri "http://localhost:5000/api/dados-exportacao/vinhos-de-mesa" -Headers @{ "Authorization" = "Bearer $_" } }
+```
+
+* Python:
+ ```python
+import requests
+def realiza_requisicao(token):
+    url = "http://localhost:5000/api/dados-importacao/vinhos-de-mesa"
     headers = {
         "Authorization": f"Bearer {token}",
         "Content-Type": "application/json"
