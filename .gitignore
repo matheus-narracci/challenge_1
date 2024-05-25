@@ -4,5 +4,6 @@
 venv/
 /venv/
 venv
+
 .vscode/
 .log
