@@ -12,3 +12,5 @@ class Config:
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     # Configuração do SQL Alchemy
     SQLALCHEMY_TRACK_MODIFICATIONS = os.getenv('SQLALCHEMY_TRACK_MODIFICATIONS')
+    # Url da API
+    API_URL = os.getenv('API_URL')
