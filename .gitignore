@@ -1,5 +1,8 @@
 # Ignorar arquivos .env
 .env
 .venv/
+venv/
+/venv/
+venv
 .vscode/
 .log
