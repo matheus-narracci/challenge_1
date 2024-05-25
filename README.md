@@ -214,7 +214,7 @@ def realiza_requisicao(token):
     return response.json()
 ```
 
-#### 3. Dados de Processamento
+#### 4. Dados de Processamento
 
 <p>Consulta dados relacionados ao processamento de viníferas, americanas e híbridas, uvas de mesa e sem classificação..</p>
 <ul>
@@ -302,7 +302,7 @@ def realiza_requisicao(token):
 ```
 
 
-#### 4. Dados de Comercialização
+#### 5. Dados de Comercialização
 
 <p>Consulta dados relacionados à comercialização de vinhos, sucos e derivados do Rio Grande do Sul.</p>
 <ul>
@@ -379,7 +379,7 @@ def realiza_requisicao(token):
     return response.json()
 ```
 
-#### 5. Dados de Importação
+#### 6. Dados de Importação
 
 <p>Consulta dados relacionados à importação de vinhos de mesa, espumantes, uvas frescas, uvas passas e sucos de uva.</p>
 <ul>
@@ -467,5 +467,93 @@ def realiza_requisicao(token):
     return response.json()
 ```
 
+
+#### 7. Dados de Exportação
+
+<p>Consulta dados relacionados à exportação de vinhos de mesa, espumantes, uvas frescas e sucos de uva.</p>
+<ul>
+    <li><strong>Endpoint:</strong> <code>/api/dados-exportacao/&lt;arg&gt;</code></li>
+    <li><strong>Método:</strong> GET</li>
+    <li><strong>Descrição:</strong> Retorna dados de exportação baseados no argumento fornecido (<code>vinhos-de-mesa</code>, <code>espumantes</code>, <code>uvas-frescas</code> ou <code>sucos-de-uva</code>).</li>
+</ul>
+
+##### Exemplo de requisição:
+<pre><code>GET /api/dados-exportacao/vinhos-de-mesa</code></pre>
+<pre><code>GET /api/dados-exportacao/espumantes</code></pre>
+<pre><code>GET /api/dados-exportacao/uvas-frescas</code></pre>
+<pre><code>GET /api/dados-exportacao/uvas-passas</code></pre>
+<pre><code>GET /api/dados-exportacao/sucos-de-uva</code></pre>
+
+
+##### Parâmetros:
+<ul>
+    <li><code>arg</code>: (string) O tipo de dado de processamento que deseja consultar. Pode ser <code>vinhos-de-mesa</code>, <code>espumantes</code>, <code>uvas-frescas</code> ou <code>sucos-de-uva</code>.</li>
+</ul>
+
+
+##### Exemplo de respostas:
+<pre><code>{
+	"msg": "Missing Authorization Header"
+}
+</code></pre>
+
+<pre><code>{
+	"msg": "Token has expired"
+}</code></pre>
+
+<pre><code>{
+	"msg": "Missing 'Bearer' type in 'Authorization' header. Expected 'Authorization: Bearer <JWT>'"
+}</code></pre>
+
+<pre><code>{
+  "data": [
+    {
+	"ano": 1970,
+	"pais": "afeganistao",
+	"quantidade_kg": 0,
+	"valor_us": 0
+    },
+    {
+	"ano": 1970,
+	"pais": "africa do sul",
+	"quantidade_kg": 0,
+	"valor_us": 0
+    }
+  ...
+  ]
+}
+</code></pre>
+
+##### Possíveis respostas da requisição:
+<ul>
+  <li><strong>200:</strong> Requisição concluída com sucesso.</li>
+</ul>
+<ul>
+  <li><strong>401:</strong> Token expirado.</li>
+</ul>
+<ul>
+  <li><strong>400:</strong> Requisição malformada.</li>
+</ul>
+
+
+##### Exemplos de uso
+* Prompt de Comando:
+```bash
+Invoke-RestMethod -Uri "http://localhost:5000/auth/login" -Method Post -Headers @{ "Content-Type" = "application/json" } -Body '{ "username": "seu_usuario", "password": "sua_senha" }' | Select-Object -ExpandProperty access_token | ForEach-Object { Invoke-RestMethod -Uri "http://localhost:5000/api/dados-exportacao/vinhos-de-mesa" -Headers @{ "Authorization" = "Bearer $_" } }
+```
+
+* Python:
+ ```python
+import requests
+def realiza_requisicao(token):
+    url = "http://localhost:5000/api/dados-importacao/vinhos-de-mesa"
+    headers = {
+        "Authorization": f"Bearer {token}",
+        "Content-Type": "application/json"
+    }
+
+    response = requests.get(url, headers=headers)
+    return response.json()
+```
 
 
