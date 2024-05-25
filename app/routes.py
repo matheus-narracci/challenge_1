@@ -147,6 +147,63 @@ def get_processa_viniferas(arg):
         return jsonify({"error": "Erro ao analisar o arquivo CSV: " + str(e)}), 500
 
 
+@routes.route("/dados-comercializacao")
+@jwt_required()
+def get_comercializacao():
+    # URL do arquivo CSV
+    url = "http://vitibrasil.cnpuv.embrapa.br/download/Comercio.csv"
+    
+    try:
+        # Fazendo uma solicitação GET para o arquivo CSV
+        response = requests.get(url)
+        response.raise_for_status()  # Verifica se houve erro na solicitação
+        
+        # Lendo os dados do arquivo CSV
+        df = pd.read_csv(io.StringIO(response.content.decode('utf8')), sep=';')
+        
+        # Dropa colunas Id e control
+        df = df.drop(df.columns[[0, 1]], axis=1)
+        
+        # Ajusta as colunas
+        dados_reestruturados = pd.melt(df, id_vars='Produto', var_name='ano', value_name='quantidade_litros')
+
+        # Lista para armazenar os tipos
+        tipos = []
+
+        # Variável para armazenar o tipo atual
+        tipo_atual = None
+
+        # Itera sobre as linhas da coluna 'control'
+        for control in dados_reestruturados['Produto']:
+            if control.isupper():
+                tipo_atual = control
+            tipos.append(tipo_atual)
+
+        # Adiciona a nova coluna tipo_produto
+        dados_reestruturados['tipo_produto'] = [x.lower() for x in tipos]
+
+        # Remove as linhas que contêm os tipos (caixa alta) da coluna 'Produto'
+        dados_reestruturados = dados_reestruturados[~dados_reestruturados['Produto'].str.isupper()]
+
+        # Renomeia a coluna 'produto' para 'subtipo'
+        dados_reestruturados = dados_reestruturados.rename(columns={'Produto': 'produto'})
+        dados_reestruturados['produto'] = dados_reestruturados['produto'].apply(lambda x : x.lower())
+
+        # Transforma os dados em JSON
+        dados_json = dados_reestruturados.to_dict(orient='records')
+
+        # Retorna os dados como resposta
+        return jsonify({"data": dados_json})
+    
+    except requests.exceptions.RequestException as e:
+        # Retornando uma mensagem de erro se a solicitação falhar
+        return jsonify({"error": str(e)}), 500
+    except pd.errors.ParserError as e:
+        # Retornando uma mensagem de erro se houver um erro ao analisar o arquivo CSV
+        return jsonify({"error": "Erro ao analisar o arquivo CSV"}), 500
+
+
+
 @routes.route("/dados-importacao/<arg>", methods=['GET'])
 @jwt_required()
 def get_importacao(arg):
@@ -217,7 +274,7 @@ def get_importacao(arg):
     except pd.errors.ParserError as e:
         # Lidar com erros ao analisar o arquivo CSV
         return jsonify({"error": "Erro ao analisar o arquivo CSV: " + str(e)}), 500
-
+ 
 
 @routes.route("/dados-exportacao/<arg>", methods=['GET'])
 @jwt_required()
@@ -287,58 +344,3 @@ def get_exportacao(arg):
     except pd.errors.ParserError as e:
         # Lidar com erros ao analisar o arquivo CSV
         return jsonify({"error": "Erro ao analisar o arquivo CSV: " + str(e)}), 500
-
-@routes.route("/dados-comercializacao")
-@jwt_required()
-def get_comercializacao():
-    # URL do arquivo CSV
-    url = "http://vitibrasil.cnpuv.embrapa.br/download/Comercio.csv"
-    
-    try:
-        # Fazendo uma solicitação GET para o arquivo CSV
-        response = requests.get(url)
-        response.raise_for_status()  # Verifica se houve erro na solicitação
-        
-        # Lendo os dados do arquivo CSV
-        df = pd.read_csv(io.StringIO(response.content.decode('utf8')), sep=';')
-        
-        # Dropa colunas Id e control
-        df = df.drop(df.columns[[0, 1]], axis=1)
-        
-        # Ajusta as colunas
-        dados_reestruturados = pd.melt(df, id_vars='Produto', var_name='ano', value_name='quantidade_litros')
-
-        # Lista para armazenar os tipos
-        tipos = []
-
-        # Variável para armazenar o tipo atual
-        tipo_atual = None
-
-        # Itera sobre as linhas da coluna 'control'
-        for control in dados_reestruturados['Produto']:
-            if control.isupper():
-                tipo_atual = control
-            tipos.append(tipo_atual)
-
-        # Adiciona a nova coluna tipo_produto
-        dados_reestruturados['tipo_produto'] = [x.lower() for x in tipos]
-
-        # Remove as linhas que contêm os tipos (caixa alta) da coluna 'Produto'
-        dados_reestruturados = dados_reestruturados[~dados_reestruturados['Produto'].str.isupper()]
-
-        # Renomeia a coluna 'produto' para 'subtipo'
-        dados_reestruturados = dados_reestruturados.rename(columns={'Produto': 'produto'})
-        dados_reestruturados['produto'] = dados_reestruturados['produto'].apply(lambda x : x.lower())
-
-        # Transforma os dados em JSON
-        dados_json = dados_reestruturados.to_dict(orient='records')
-
-        # Retorna os dados como resposta
-        return jsonify({"data": dados_json})
-    
-    except requests.exceptions.RequestException as e:
-        # Retornando uma mensagem de erro se a solicitação falhar
-        return jsonify({"error": str(e)}), 500
-    except pd.errors.ParserError as e:
-        # Retornando uma mensagem de erro se houver um erro ao analisar o arquivo CSV
-        return jsonify({"error": "Erro ao analisar o arquivo CSV"}), 500
