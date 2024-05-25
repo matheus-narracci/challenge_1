@@ -32,9 +32,14 @@ flask db history
 
 ### Histórico
 
-Migração <base> -> 330b4f1d634e, base de usuários
+Migração <base> -> 55125547df4a, base de usuários
+
+Atributos:
+
+<li><strong>username</strong>: (string) usuário a ser cadastrado para login</li>
+<li><strong>password</strong>: (string) senha vinculada ao usuário</li>
 
 Descrição: Adiciona a tabela 'usuários' ao banco de dados.
 
-Data: 2024-05-21
+Data: 2024-05-25
 

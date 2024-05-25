@@ -57,11 +57,12 @@ def get_producao():
         # Organiza colunas
         dados_reestruturados = dados_reestruturados[['tipo_produto', 'produto', 'ano', 'quantidade_kg']]
 
-        # Transforma os dados em Json
-        dados_json = dados_reestruturados.to_json(orient='records', force_ascii=False)
+         # Transforma os dados em JSON
+        dados_json = dados_reestruturados.to_dict(orient='records')
 
-        # Retornando os dados como resposta
-        return dados_json
+        # Retorna os dados como resposta
+        return jsonify({"data": dados_json})
+
     except requests.exceptions.RequestException as e:
         # Lidar com erros de solicitação
         return jsonify({"error": "Erro ao fazer a solicitação: " + str(e)}), 500
@@ -131,12 +132,12 @@ def get_processa_viniferas(arg):
         else:
             dados_reestruturados['cultivar'] = dados_reestruturados['cultivar'].apply(lambda x: x.split('_')[1]).str.lower().apply(lambda x: unidecode(x))
 
-        # Convertendo os dados para JSON
-        dados_json = dados_reestruturados.to_json(orient='records', force_ascii=False)
+         # Transforma os dados em JSON
+        dados_json = dados_reestruturados.to_dict(orient='records')
 
-        # Retornando os dados como resposta
-        return dados_json
-
+        # Retorna os dados como resposta
+        return jsonify({"data": dados_json})
+    
     except requests.exceptions.RequestException as e:
         # Lidar com erros de solicitação
         return jsonify({"error": "Erro ao fazer a solicitação: " + str(e)}), 500
@@ -203,12 +204,12 @@ def get_importacao(arg):
         # Deixa em minusculo e retira acentuação
         dados_reestruturados['pais'] = dados_reestruturados['pais'].str.lower().apply(lambda x: unidecode(x))
 
-        # Convertendo os dados para JSON
-        dados_json = dados_reestruturados.to_json(orient='records', force_ascii=False)
+        # Transforma os dados em JSON
+        dados_json = dados_reestruturados.to_dict(orient='records')
 
-        # Retornando os dados como resposta
-        return dados_json
-
+        # Retorna os dados como resposta
+        return jsonify({"data": dados_json})
+    
     except requests.exceptions.RequestException as e:
         # Lidar com erros de solicitação
         return jsonify({"error": "Erro ao fazer a solicitação: " + str(e)}), 500
@@ -273,11 +274,11 @@ def get_exportacao(arg):
         # Deixa em minusculo e retira acentuação
         dados_reestruturados['pais'] = dados_reestruturados['pais'].str.lower().apply(lambda x: unidecode(x))
 
-        # Convertendo os dados para JSON
-        dados_json = dados_reestruturados.to_json(orient='records', force_ascii=False)
+        # Transforma os dados em JSON
+        dados_json = dados_reestruturados.to_dict(orient='records')
 
-        # Retornando os dados como resposta
-        return dados_json
+        # Retorna os dados como resposta
+        return jsonify({"data": dados_json})
 
     except requests.exceptions.RequestException as e:
         # Lidar com erros de solicitação
@@ -329,11 +330,11 @@ def get_comercializacao():
         dados_reestruturados = dados_reestruturados.rename(columns={'Produto': 'produto'})
         dados_reestruturados['produto'] = dados_reestruturados['produto'].apply(lambda x : x.lower())
 
-        # Convertendo os dados para JSON
-        dados_json = dados_reestruturados.to_json(orient='records', force_ascii=False)
-        
-        # Retornando os dados como resposta
-        return dados_json
+        # Transforma os dados em JSON
+        dados_json = dados_reestruturados.to_dict(orient='records')
+
+        # Retorna os dados como resposta
+        return jsonify({"data": dados_json})
     
     except requests.exceptions.RequestException as e:
         # Retornando uma mensagem de erro se a solicitação falhar
