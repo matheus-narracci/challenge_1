@@ -1,0 +1,373 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Embrapa Vitibrasil API",
+    "description": "Api para pegar os dados do site: http://vitibrasil.cnpuv.embrapa.br/index.php?opcao=opt_01",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/dados-producao": {
+      "get": {
+        "tags": [
+          "Dados de Produção"
+        ],
+        "summary": "Retorna dados de produção dos produtos disponíveis na aba.",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-processamento/viniferas": {
+      "get": {
+        "tags": [
+          "Dados de Processamento"
+        ],
+        "summary": "Retorna dados de processamento baseados no argumento fornecido (viniferas, uvas-de-mesa, americanas-e-hibridas ou sem-classificacao).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-processamento/uvas-de-mesa": {
+      "get": {
+        "tags": [
+          "Dados de Processamento"
+        ],
+        "summary": "Retorna dados de processamento baseados no argumento fornecido (viniferas, uvas-de-mesa, americanas-e-hibridas ou sem-classificacao).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-processamento/americanas-e-hibridas": {
+      "get": {
+        "tags": [
+          "Dados de Processamento"
+        ],
+        "summary": "Retorna dados de processamento baseados no argumento fornecido (viniferas, uvas-de-mesa, americanas-e-hibridas ou sem-classificacao).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-processamento/sem-classificacao": {
+      "get": {
+        "tags": [
+          "Dados de Processamento"
+        ],
+        "summary": "Retorna dados de processamento baseados no argumento fornecido (viniferas, uvas-de-mesa, americanas-e-hibridas ou sem-classificacao).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-comercializacao": {
+      "get": {
+        "tags": [
+          "Dados de Comercialização"
+        ],
+        "summary": "Retorna dados de comercialização dos produtos disponíveis na aba.",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-importacao/vinhos-de-mesa": {
+      "get": {
+        "tags": [
+          "Dados de Importação"
+        ],
+        "summary": "Retorna dados de importação baseados no argumento fornecido (vinhos-de-mesa, espumantes, uvas-frescas, uvas-passas ou sucos-de-uva).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-importacao/espumantes": {
+      "get": {
+        "tags": [
+          "Dados de Importação"
+        ],
+        "summary": "Retorna dados de importação baseados no argumento fornecido (vinhos-de-mesa, espumantes, uvas-frescas, uvas-passas ou sucos-de-uva).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-importacao/uvas-frescas": {
+      "get": {
+        "tags": [
+          "Dados de Importação"
+        ],
+        "summary": "Retorna dados de importação baseados no argumento fornecido (vinhos-de-mesa, espumantes, uvas-frescas, uvas-passas ou sucos-de-uva).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-importacao/uvas-passas": {
+      "get": {
+        "tags": [
+          "Dados de Importação"
+        ],
+        "summary": "Retorna dados de importação baseados no argumento fornecido (vinhos-de-mesa, espumantes, uvas-frescas, uvas-passas ou sucos-de-uva).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-importacao/sucos-de-uva": {
+      "get": {
+        "tags": [
+          "Dados de Importação"
+        ],
+        "summary": "Retorna dados de importação baseados no argumento fornecido (vinhos-de-mesa, espumantes, uvas-frescas, uvas-passas ou sucos-de-uva).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-exportacao/vinhos-de-mesa": {
+      "get": {
+        "tags": [
+          "Dados de Exportação"
+        ],
+        "summary": "Retorna dados de exportação baseados no argumento fornecido (vinhos-de-mesa, espumantes, uvas-frescas ou sucos-de-uva).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-exportacao/espumantes": {
+      "get": {
+        "tags": [
+          "Dados de Exportação"
+        ],
+        "summary": "Retorna dados de exportação baseados no argumento fornecido (vinhos-de-mesa, espumantes, uvas-frescas ou sucos-de-uva).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-exportacao/uvas-frescas": {
+      "get": {
+        "tags": [
+          "Dados de Exportação"
+        ],
+        "summary": "Retorna dados de exportação baseados no argumento fornecido (vinhos-de-mesa, espumantes, uvas-frescas ou sucos-de-uva).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-exportacao/uvas-passas": {
+      "get": {
+        "tags": [
+          "Dados de Exportação"
+        ],
+        "summary": "Retorna dados de exportação baseados no argumento fornecido (vinhos-de-mesa, espumantes, uvas-frescas ou sucos-de-uva).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/api/dados-exportacao/sucos-de-uva": {
+      "get": {
+        "tags": [
+          "Dados de Exportação"
+        ],
+        "summary": "Retorna dados de exportação baseados no argumento fornecido (vinhos-de-mesa, espumantes, uvas-frescas ou sucos-de-uva).",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "Registro de Usuário"
+        ],
+        "summary": "Retorna a mensagem de usuário criado ou se usuário existente.",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Login do Usuário"
+        ],
+        "summary": "Retorna a mensagem de usuário ou senha incorretos ou o token de acesso.",
+        "responses": {
+          "200": {
+            "description": "Requisição concluída com sucesso."
+          },
+          "400": {
+            "description": "Requisição malformada."
+          },
+          "401": {
+            "description": "Credenciais inválidas."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Usuarios": {
+        "type": "object",
+        "properties": {
+          "nome": {
+            "type": "string",
+            "example": "Lucas"
+          },
+          "email": {
+            "type": "string",
+            "example": "emaillucas@gmail.com"
+          },
+          "senha": {
+            "type": "string",
+            "example": "senhalucas"
+          }
+        }
+      }
+    }
+  }
+}
