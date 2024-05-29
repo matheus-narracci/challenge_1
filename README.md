@@ -513,7 +513,6 @@ def realiza_requisicao(token):
 <pre><code>GET /api/dados-exportacao/vinhos-de-mesa</code></pre>
 <pre><code>GET /api/dados-exportacao/espumantes</code></pre>
 <pre><code>GET /api/dados-exportacao/uvas-frescas</code></pre>
-<pre><code>GET /api/dados-exportacao/uvas-passas</code></pre>
 <pre><code>GET /api/dados-exportacao/sucos-de-uva</code></pre>
 
 
